@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>tutorial.misiontic</groupId>
 	<artifactId>seguridad</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>seguridad</name>
 	<description>Modulo de seguridad MinTIC 2022</description>
 	<properties>
