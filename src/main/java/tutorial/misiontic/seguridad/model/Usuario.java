@@ -2,6 +2,7 @@ package tutorial.misiontic.seguridad.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -13,6 +14,9 @@ public class Usuario {
     private String seudonimo;
     private String correo;
     private String contrasena;
+
+    @DBRef
+    private Rol rol;
 
     public Usuario(String seudonimo, String correo, String contrasena)
     {

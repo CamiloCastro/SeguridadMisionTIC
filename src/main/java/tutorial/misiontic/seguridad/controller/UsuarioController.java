@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import tutorial.misiontic.seguridad.model.Usuario;
 import tutorial.misiontic.seguridad.repository.UsuarioRepository;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -49,6 +48,8 @@ public class UsuarioController {
                 actual.setSeudonimo(infoUsuario.getSeudonimo());
             if(infoUsuario.getCorreo() != null && !infoUsuario.getCorreo().isBlank())
                 actual.setCorreo(infoUsuario.getCorreo());
+            if(infoUsuario.getRol() != null)
+                actual.setRol(infoUsuario.getRol());
 
             return this.usuarioRepo.save(actual);
         }
