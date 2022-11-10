@@ -9,6 +9,8 @@ import tutorial.misiontic.seguridad.repository.PermisoRepository;
 import tutorial.misiontic.seguridad.repository.PermisoRolRepository;
 import tutorial.misiontic.seguridad.repository.RolRepository;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +73,42 @@ public class RolPermisoController {
     public void delete(@PathVariable String id)
     {
         this.permisoRolRepo.deleteById(id);
+    }
+
+    @PostMapping("/validar-permiso/rol/{id_rol}")
+    public PermisoRol getPermiso(@PathVariable String id_rol, @RequestBody Permiso infoPermiso,
+                                 final HttpServletResponse response) throws IOException {
+
+        Optional<Permiso> opt = this.permisoRepo.findByUrlAndMetodo(infoPermiso.getUrl(), infoPermiso.getMetodo());
+
+        if(!opt.isPresent())
+        {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
+
+        Permiso p = opt.get();
+
+        Optional<Rol> optRol = this.rolRepo.findById(id_rol);
+
+        if(!optRol.isPresent())
+        {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
+
+        Rol r = optRol.get();
+
+        Optional<PermisoRol> optPermisoRol = this.permisoRolRepo.findByRolAndPermiso(r, p);
+
+        if(!optPermisoRol.isPresent())
+        {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
+
+        return optPermisoRol.get();
+
     }
 
 }

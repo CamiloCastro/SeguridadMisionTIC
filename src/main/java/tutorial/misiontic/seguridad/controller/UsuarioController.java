@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import tutorial.misiontic.seguridad.model.Usuario;
 import tutorial.misiontic.seguridad.repository.UsuarioRepository;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -16,6 +18,29 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepo;
+
+    @PostMapping("/validate")
+    public Usuario validate(@RequestBody Usuario infoUsuario, final HttpServletResponse response) throws IOException {
+
+        String correo = infoUsuario.getCorreo();
+        String password = infoUsuario.getContrasena();
+        password = tecnicaHash(password);
+
+        Optional<Usuario> opt = this.usuarioRepo.findByCorreoAndContrasena(correo, password);
+
+        if(opt.isPresent())
+        {
+            Usuario u = opt.get();
+            u.setContrasena("");
+            return u;
+        }
+        else
+        {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
+
+    }
 
     @GetMapping("")
     public List<Usuario> index() {
