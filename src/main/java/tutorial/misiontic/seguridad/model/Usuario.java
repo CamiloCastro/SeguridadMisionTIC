@@ -14,15 +14,17 @@ public class Usuario {
     private String seudonimo;
     private String correo;
     private String contrasena;
+    private String cedula;
 
     @DBRef
     private Rol rol;
 
-    public Usuario(String seudonimo, String correo, String contrasena)
+    public Usuario(String seudonimo, String correo, String contrasena, String cedula)
     {
         this.seudonimo = seudonimo;
         this.correo = correo;
         this.contrasena = contrasena;
+        this.cedula = cedula;
     }
 
 }

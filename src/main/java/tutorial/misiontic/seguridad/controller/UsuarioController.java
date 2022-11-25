@@ -75,6 +75,8 @@ public class UsuarioController {
                 actual.setCorreo(infoUsuario.getCorreo());
             if(infoUsuario.getRol() != null)
                 actual.setRol(infoUsuario.getRol());
+            if(infoUsuario.getCedula() != null && !infoUsuario.getCedula().isBlank())
+                actual.setCedula(infoUsuario.getCedula());
 
             return this.usuarioRepo.save(actual);
         }
